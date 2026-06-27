@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chalupa Svratka – Ubytování v srdci Vysočiny</title>
+    <meta name="description" content="Útulná chalupa k pronájmu ve Svratce na Vysočině. Ideální místo pro rodinnou dovolenou v přírodě Žďárských vrchů. Lezení, turistika, cyklistika.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #2d5016;
+            --color-primary-light: #4a7c28;
+            --color-warm: #8b6914;
+            --color-cream: #faf8f2;
+            --color-light: #f0ebe0;
+            --color-text: #2c2c2c;
+            --color-text-light: #5a5a5a;
+            --font-heading: 'Playfair Display', Georgia, serif;
+            --font-body: 'Source Sans 3', -apple-system, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            color: var(--color-text);
+            line-height: 1.7;
+            background-color: var(--color-cream);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(250, 248, 242, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 0.75rem 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        nav .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav .logo {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        nav .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        nav .nav-links li a {
+            text-decoration: none;
+            color: var(--color-text-light);
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        nav .nav-links li a:hover { color: var(--color-primary); }
+
+        /* Language switcher */
+        .lang-switch {
+            display: flex;
+            gap: 0.25rem;
+            margin-left: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .lang-switch button {
+            background: none;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--color-text-light);
+            transition: all 0.2s;
+        }
+        .lang-switch button.active {
+            background: var(--color-primary);
+            color: white;
+        }
+        .lang-switch button:hover:not(.active) {
+            background: var(--color-light);
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: var(--color-text);
+            transition: all 0.3s;
+        }
+
+        /* Hero */
+        .hero {
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(135deg, #2d5016 0%, #1a3a0a 50%, #0f2505 100%);
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('img/chko-zdarske-vrchy-title.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            padding: 2rem;
+            max-width: 800px;
+        }
+        .hero-content h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2.2rem, 6vw, 4.5rem);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .hero-content p {
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            font-weight: 300;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        .hero-content .cta-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: white;
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-size: 1rem;
+        }
+        .hero-content .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Sections */
+        section { padding: 5rem 1.5rem; }
+        .section-inner { max-width: 1100px; margin: 0 auto; }
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .section-subtitle {
+            text-align: center;
+            color: var(--color-text-light);
+            font-size: 1.05rem;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            font-weight: 300;
+        }
+
+        /* About */
+        .about { background: white; }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .about-image {
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: var(--color-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #ccc;
+        }
+        .about-image-placeholder {
+            color: var(--color-text-light);
+            text-align: center;
+            padding: 2rem;
+            font-style: italic;
+        }
+        .about-text h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+        .about-text p { margin-bottom: 1rem; color: var(--color-text-light); }
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .feature-item::before {
+            content: '✓';
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        /* Surroundings */
+        .surroundings { background: var(--color-cream); }
+        .attractions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .attraction-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .attraction-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+        }
+        .attraction-card img { width: 100%; height: 200px; object-fit: cover; }
+        .attraction-card .card-body { padding: 1.25rem; }
+        .attraction-card h4 {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            color: var(--color-primary);
+            margin-bottom: 0.4rem;
+        }
+        .attraction-card p { color: var(--color-text-light); font-size: 0.9rem; }
+        .attraction-card .distance {
+            display: inline-block;
+            margin-top: 0.6rem;
+            font-size: 0.8rem;
+            color: var(--color-warm);
+            font-weight: 600;
+        }
+
+        /* Gallery */
+        .gallery { background: white; }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: var(--color-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #ccc;
+        }
+        .gallery-item-placeholder {
+            color: var(--color-text-light);
+            text-align: center;
+            padding: 1.5rem;
+            font-style: italic;
+            font-size: 0.85rem;
+        }
+
+        /* Seasons */
+        .seasons { background: var(--color-light); }
+        .seasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+        .season-card {
+            text-align: center;
+            padding: 2rem 1.25rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+        }
+        .season-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+        .season-card h4 {
+            font-family: var(--font-heading);
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .season-card p { color: var(--color-text-light); font-size: 0.85rem; }
+
+        /* Contact */
+        .contact { background: var(--color-primary); color: white; }
+        .contact .section-title { color: white; }
+        .contact .section-subtitle { color: rgba(255,255,255,0.8); }
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            text-align: center;
+        }
+        .contact-item {
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+        }
+        .contact-item .icon { font-size: 2rem; margin-bottom: 0.75rem; }
+        .contact-item h4 { font-size: 1rem; margin-bottom: 0.4rem; }
+        .contact-item p { opacity: 0.85; font-size: 0.95rem; }
+        .contact-item a { color: white; text-decoration: underline; }
+
+        footer {
+            background: #1a3a0a;
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.8rem;
+        }
+        .map-container {
+            margin-top: 2.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .map-container iframe { width: 100%; height: 300px; border: 0; }
+        .photo-credits {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--color-light);
+            font-size: 0.75rem;
+            color: var(--color-text-light);
+            text-align: center;
+        }
+        .photo-credits a { color: var(--color-primary); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .attractions-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 0.6rem 1rem; }
+            .hamburger { display: flex; }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 75%;
+                max-width: 300px;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                padding: 4rem 2rem 2rem;
+                gap: 1.5rem;
+                box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+                transition: right 0.3s ease;
+                align-items: flex-start;
+            }
+            .nav-links.open { right: 0; }
+            .nav-links li a { font-size: 1.1rem; }
+            .lang-switch { margin-left: 0; margin-top: 1rem; }
+
+            section { padding: 3.5rem 1.25rem; }
+            .features { grid-template-columns: 1fr; }
+            .hero { min-height: 500px; }
+            .hero-content .cta-btn { padding: 0.85rem 2rem; }
+            .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+            .seasons-grid { grid-template-columns: 1fr 1fr; }
+            .map-container iframe { height: 250px; }
+        }
+
+        @media (max-width: 480px) {
+            .seasons-grid { grid-template-columns: 1fr; }
+            .contact-info { grid-template-columns: 1fr; }
+            .hero-content h1 { font-size: 2rem; }
+            .hero-content p { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+    <div class="nav-inner">
+        <a href="#" class="logo">🏡 Chalupa Svratka</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#o-chalupe" data-cs="O chalupě" data-en="About" data-de="Über uns">O chalupě</a></li>
+            <li><a href="#okoli" data-cs="Okolí" data-en="Surroundings" data-de="Umgebung">Okolí</a></li>
+            <li><a href="#galerie" data-cs="Galerie" data-en="Gallery" data-de="Galerie">Galerie</a></li>
+            <li><a href="#sezony" data-cs="Sezóny" data-en="Seasons" data-de="Jahreszeiten">Sezóny</a></li>
+            <li><a href="#kontakt" data-cs="Kontakt" data-en="Contact" data-de="Kontakt">Kontakt</a></li>
+            <li>
+                <div class="lang-switch">
+                    <button class="active" onclick="setLang('cs')">CZ</button>
+                    <button onclick="setLang('en')">EN</button>
+                    <button onclick="setLang('de')">DE</button>
+                </div>
+            </li>
+        </ul>
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-content">
+        <h1 data-cs="Vaše útočiště v srdci Vysočiny" data-en="Your retreat in the heart of the Highlands" data-de="Ihr Rückzugsort im Herzen des Hochlandes">Vaše útočiště v srdci Vysočiny</h1>
+        <p data-cs="Útulná chalupa ve Svratce, obklopená skalami a lesy Žďárských vrchů. Ráj horolezců, turistů i těch, kdo hledají klid." data-en="A cozy cottage in Svratka, surrounded by rocks and forests of the Žďárské vrchy mountains. A paradise for climbers, hikers, and those seeking peace." data-de="Ein gemütliches Ferienhaus in Svratka, umgeben von Felsen und Wäldern des Žďárské-vrchy-Gebirges. Ein Paradies für Kletterer, Wanderer und Ruhesuchende.">Útulná chalupa ve Svratce, obklopená skalami a lesy Žďárských vrchů. Ráj horolezců, turistů i těch, kdo hledají klid.</p>
+        <a href="#kontakt" class="cta-btn" data-cs="Nezávazná poptávka" data-en="Non-binding inquiry" data-de="Unverbindliche Anfrage">Nezávazná poptávka</a>
+    </div>
+</section>
+
+<!-- About -->
+<section class="about" id="o-chalupe">
+    <div class="section-inner">
+        <h2 class="section-title" data-cs="O chalupě" data-en="About the cottage" data-de="Über das Ferienhaus">O chalupě</h2>
+        <p class="section-subtitle" data-cs="Tradiční česká chalupa s duší, kde se potkává pohodlí s kouzlem venkova" data-en="A traditional Czech cottage with soul, where comfort meets countryside charm" data-de="Ein traditionelles tschechisches Ferienhaus mit Seele, wo Komfort auf ländlichen Charme trifft">Tradiční česká chalupa s duší, kde se potkává pohodlí s kouzlem venkova</p>
+
+        <div class="about-grid">
+            <div class="about-image">
+                <div class="about-image-placeholder">
+                    📷<br><span data-cs="Sem vložte hlavní foto chalupy" data-en="Insert main cottage photo here" data-de="Hauptfoto des Ferienhauses hier einfügen">Sem vložte hlavní foto chalupy</span>
+                </div>
+            </div>
+            <div class="about-text">
+                <h3 data-cs="Základna pro vaše dobrodružství" data-en="Base for your adventures" data-de="Ausgangspunkt für Ihre Abenteuer">Základna pro vaše dobrodružství</h3>
+                <p data-cs="Naše chalupa na adrese Čikánecká 2 ve Svratce je ideální základnou pro aktivní dovolenou i odpočinek. Svratka leží přímo na hranici Žďárských vrchů a Železných hor – obklopena skalními masívy, hlubokými lesy a stovkami turistických tras." data-en="Our cottage at Čikánecká 2 in Svratka is the ideal base for an active holiday or relaxation. Svratka lies right on the border of the Žďárské vrchy and the Iron Mountains – surrounded by rock formations, deep forests, and hundreds of hiking trails." data-de="Unser Ferienhaus in der Čikánecká 2 in Svratka ist die ideale Basis für einen aktiven Urlaub oder Entspannung. Svratka liegt direkt an der Grenze des Žďárské-vrchy-Gebirges und der Eisengebirge – umgeben von Felsformationen, tiefen Wäldern und hunderten Wanderwegen.">Naše chalupa na adrese Čikánecká 2 ve Svratce je ideální základnou pro aktivní dovolenou i odpočinek. Svratka leží přímo na hranici Žďárských vrchů a Železných hor – obklopena skalními masívy, hlubokými lesy a stovkami turistických tras.</p>
+                <p data-cs="Pro horolezce je okolí pravým rájem – skalní útvary Malinská skála, Čtyři palice a Devět skal nabízejí desítky lezeckých cest všech obtížností. Pro turisty a cyklisty tu čeká síť značených tras napříč chráněnou krajinnou oblastí." data-en="For climbers, the area is a true paradise – rock formations at Malinská skála, Čtyři palice, and Devět skal offer dozens of climbing routes of all difficulty levels. Hikers and cyclists will find a network of marked trails across the protected landscape area." data-de="Für Kletterer ist die Umgebung ein wahres Paradies – die Felsformationen Malinská skála, Čtyři palice und Devět skal bieten dutzende Kletterrouten aller Schwierigkeitsgrade. Wanderer und Radfahrer finden ein Netz markierter Wege durch das Landschaftsschutzgebiet.">Pro horolezce je okolí pravým rájem – skalní útvary Malinská skála, Čtyři palice a Devět skal nabízejí desítky lezeckých cest všech obtížností. Pro turisty a cyklisty tu čeká síť značených tras napříč chráněnou krajinnou oblastí.</p>
+
+                <div class="features">
+                    <div class="feature-item" data-cs="Plně vybavená kuchyně" data-en="Fully equipped kitchen" data-de="Voll ausgestattete Küche">Plně vybavená kuchyně</div>
+                    <div class="feature-item" data-cs="Zahrada s posezením" data-en="Garden with seating" data-de="Garten mit Sitzgelegenheit">Zahrada s posezením</div>
+                    <div class="feature-item" data-cs="Parkování u chalupy" data-en="Parking at the cottage" data-de="Parken am Ferienhaus">Parkování u chalupy</div>
+                    <div class="feature-item" data-cs="Klidná lokalita" data-en="Quiet location" data-de="Ruhige Lage">Klidná lokalita</div>
+                    <div class="feature-item" data-cs="Úschovna kol a lezeckého vybavení" data-en="Bike & climbing gear storage" data-de="Fahrrad- & Kletterausrüstung-Aufbewahrung">Úschovna kol a lezeckého vybavení</div>
+                    <div class="feature-item" data-cs="Ideální pro rodiny i skupiny" data-en="Ideal for families & groups" data-de="Ideal für Familien & Gruppen">Ideální pro rodiny i skupiny</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Surroundings -->
+<section class="surroundings" id="okoli">
+    <div class="section-inner">
+        <h2 class="section-title" data-cs="Okolí a výlety" data-en="Surroundings & trips" data-de="Umgebung & Ausflüge">Okolí a výlety</h2>
+        <p class="section-subtitle" data-cs="Žďárské vrchy jsou chráněnou krajinnou oblastí plnou skalních útvarů, rozhleden a přírodních památek. Lezení, turistika, kolo – vše na dosah." data-en="The Žďárské vrchy mountains are a protected landscape full of rock formations, lookout towers, and natural monuments. Climbing, hiking, cycling – all within reach." data-de="Das Žďárské-vrchy-Gebirge ist ein Landschaftsschutzgebiet voller Felsformationen, Aussichtstürme und Naturdenkmäler. Klettern, Wandern, Radfahren – alles in Reichweite.">Žďárské vrchy jsou chráněnou krajinnou oblastí plnou skalních útvarů, rozhleden a přírodních památek. Lezení, turistika, kolo – vše na dosah.</p>
+
+        <div class="attractions-grid">
+            <div class="attraction-card">
+                <img src="img/devet-skal-new.jpg" alt="Devět skal">
+                <div class="card-body">
+                    <h4>Devět skal (836 m)</h4>
+                    <p data-cs="Nejvyšší bod Žďárských vrchů s úchvatným výhledem na celou Vysočinu. Mohutný skalní útvar z ortoruly je přírodní památkou a vyhledávaným cílem horolezců. Na vrcholu rozhledna s panoramatem do všech stran." data-en="The highest point of the Žďárské vrchy with breathtaking views of the entire Vysočina region. The massive orthogneiss rock formation is a natural monument and popular climbing destination. A lookout tower at the summit offers panoramic views." data-de="Der höchste Punkt des Žďárské-vrchy-Gebirges mit atemberaubendem Blick auf die gesamte Region Vysočina. Die massive Orthogneis-Felsformation ist ein Naturdenkmal und beliebtes Kletterziel. Ein Aussichtsturm auf dem Gipfel bietet Panoramablick.">Nejvyšší bod Žďárských vrchů s úchvatným výhledem na celou Vysočinu. Mohutný skalní útvar z ortoruly je přírodní památkou a vyhledávaným cílem horolezců. Na vrcholu rozhledna s panoramatem do všech stran.</p>
+                    <span class="distance" data-cs="📍 8 km od chalupy" data-en="📍 8 km from cottage" data-de="📍 8 km vom Ferienhaus">📍 8 km od chalupy</span>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <img src="img/malinska-skala-new.jpg" alt="Malinská skála">
+                <div class="card-body">
+                    <h4 data-cs="Malinská skála – lezecký ráj" data-en="Malinská skála – climbing paradise" data-de="Malinská skála – Kletterparadies">Malinská skála – lezecký ráj</h4>
+                    <p data-cs="Jedna z nejoblíbenějších lezeckých oblastí Vysočiny. Mohutné rulové bloky vysoké až 15 metrů nabízejí desítky lezeckých cest od začátečnických po pokročilé. Oficiálně povolené lezení v krásném lesním prostředí." data-en="One of the most popular climbing areas in the Vysočina region. Massive gneiss blocks up to 15 meters high offer dozens of climbing routes from beginner to advanced. Officially permitted climbing in a beautiful forest setting." data-de="Eines der beliebtesten Klettergebiete der Region Vysočina. Massive Gneisblöcke bis zu 15 Meter Höhe bieten dutzende Kletterrouten von Anfänger bis Fortgeschrittene. Offiziell erlaubtes Klettern in schöner Waldumgebung.">Jedna z nejoblíbenějších lezeckých oblastí Vysočiny. Mohutné rulové bloky vysoké až 15 metrů nabízejí desítky lezeckých cest od začátečnických po pokročilé. Oficiálně povolené lezení v krásném lesním prostředí.</p>
+                    <span class="distance" data-cs="📍 12 km od chalupy" data-en="📍 12 km from cottage" data-de="📍 12 km vom Ferienhaus">📍 12 km od chalupy</span>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <img src="img/ctyri-palice-new.jpg" alt="Čtyři palice">
+                <div class="card-body">
+                    <h4 data-cs="Čtyři palice – bouldering" data-en="Čtyři palice – bouldering" data-de="Čtyři palice – Bouldern">Čtyři palice – bouldering</h4>
+                    <p data-cs="Impozantní skalní věže z ruly (733 m) uprostřed hlubokého lesa. Přírodní rezervace s tajemnou atmosférou a oblíbený cíl pro bouldering i klasické skalní lezení. Unikátní geologický útvar." data-en="Impressive gneiss rock towers (733 m) in the middle of a deep forest. A nature reserve with a mysterious atmosphere and a popular destination for bouldering and classic rock climbing. A unique geological formation." data-de="Imposante Gneis-Felstürme (733 m) mitten im tiefen Wald. Ein Naturreservat mit geheimnisvoller Atmosphäre und beliebtes Ziel für Bouldern und klassisches Felsklettern. Eine einzigartige geologische Formation.">Impozantní skalní věže z ruly (733 m) uprostřed hlubokého lesa. Přírodní rezervace s tajemnou atmosférou a oblíbený cíl pro bouldering i klasické skalní lezení. Unikátní geologický útvar.</p>
+                    <span class="distance" data-cs="📍 10 km od chalupy" data-en="📍 10 km from cottage" data-de="📍 10 km vom Ferienhaus">📍 10 km od chalupy</span>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <img src="img/velke-darko-aerial.jpg" alt="Velké Dářko">
+                <div class="card-body">
+                    <h4 data-cs="Rybník Velké Dářko" data-en="Velké Dářko Pond" data-de="Teich Velké Dářko">Rybník Velké Dářko</h4>
+                    <p data-cs="Největší rybník na Vysočině (206 ha) s písečnými plážemi a čistou vodou ke koupání. Ideální pro letní dny s rodinou – paddleboard, rybaření, procházky kolem břehů v chráněné přírodě." data-en="The largest pond in the Vysočina region (206 ha) with sandy beaches and clean water for swimming. Perfect for summer days with family – paddleboarding, fishing, walks along the shores in protected nature." data-de="Der größte Teich der Region Vysočina (206 ha) mit Sandstränden und sauberem Badewasser. Perfekt für Sommertage mit der Familie – Paddleboarding, Angeln, Spaziergänge entlang der Ufer in geschützter Natur.">Největší rybník na Vysočině (206 ha) s písečnými plážemi a čistou vodou ke koupání. Ideální pro letní dny s rodinou – paddleboard, rybaření, procházky kolem břehů v chráněné přírodě.</p>
+                    <span class="distance" data-cs="📍 15 km od chalupy" data-en="📍 15 km from cottage" data-de="📍 15 km vom Ferienhaus">📍 15 km od chalupy</span>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <img src="img/zelena-hora-new.jpg" alt="Zelená hora – UNESCO">
+                <div class="card-body">
+                    <h4>Zelená hora – UNESCO</h4>
+                    <p data-cs="Poutní kostel sv. Jana Nepomuckého ve Žďáru nad Sázavou. Mistrovské dílo barokní gotiky architekta Jana Blažeje Santiniho, zapsané na seznamu světového dědictví UNESCO." data-en="The Pilgrimage Church of St. John of Nepomuk in Žďár nad Sázavou. A masterpiece of Baroque Gothic by architect Jan Blažej Santini, inscribed on the UNESCO World Heritage List." data-de="Die Wallfahrtskirche des Hl. Johannes von Nepomuk in Žďár nad Sázavou. Ein Meisterwerk der Barockgotik des Architekten Jan Blažej Santini, eingetragen auf der UNESCO-Welterbeliste.">Poutní kostel sv. Jana Nepomuckého ve Žďáru nad Sázavou. Mistrovské dílo barokní gotiky architekta Jana Blažeje Santiniho, zapsané na seznamu světového dědictví UNESCO.</p>
+                    <span class="distance" data-cs="📍 17 km od chalupy" data-en="📍 17 km from cottage" data-de="📍 17 km vom Ferienhaus">📍 17 km od chalupy</span>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <img src="img/charakteristika-louky.jpg" alt="CHKO Žďárské vrchy">
+                <div class="card-body">
+                    <h4>CHKO Žďárské vrchy</h4>
+                    <p data-cs="Chráněná krajinná oblast s loukami, rašeliništi a stovkami kilometrů značených tras. Běžkařský ráj v zimě, cyklotrasy a singltreky v létě. Santiniho cyklotrasa vede přímo okolím Svratky." data-en="A protected landscape area with meadows, peat bogs, and hundreds of kilometers of marked trails. A cross-country skiing paradise in winter, cycle routes and singletracks in summer. The Santini cycle trail runs right through the Svratka area." data-de="Ein Landschaftsschutzgebiet mit Wiesen, Mooren und hunderten Kilometern markierter Wege. Ein Langlauf-Paradies im Winter, Radwege und Singletracks im Sommer. Der Santini-Radweg führt direkt durch die Umgebung von Svratka.">Chráněná krajinná oblast s loukami, rašeliništi a stovkami kilometrů značených tras. Běžkařský ráj v zimě, cyklotrasy a singltreky v létě. Santiniho cyklotrasa vede přímo okolím Svratky.</p>
+                    <span class="distance" data-cs="📍 Přímo v oblasti" data-en="📍 Directly in the area" data-de="📍 Direkt im Gebiet">📍 Přímo v oblasti</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="photo-credits">
+            Fotografie: <a href="https://zdarskevrchy.aopk.gov.cz" target="_blank" rel="noopener">AOPK ČR</a>, <a href="https://www.vysocina.eu" target="_blank" rel="noopener">Vysočina Tourism</a>, <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a> (CC BY-SA 4.0)
+        </div>
+    </div>
+</section>
+
+<!-- Gallery -->
+<section class="gallery" id="galerie">
+    <div class="section-inner">
+        <h2 class="section-title" data-cs="Galerie chalupy" data-en="Cottage gallery" data-de="Galerie des Ferienhauses">Galerie chalupy</h2>
+        <p class="section-subtitle" data-cs="Nahlédněte do naší chalupy a jejího zázemí" data-en="Take a peek inside our cottage" data-de="Werfen Sie einen Blick in unser Ferienhaus">Nahlédněte do naší chalupy a jejího zázemí</p>
+        <div class="gallery-grid">
+            <div class="gallery-item"><div class="gallery-item-placeholder">📷<br><small data-cs="Obývací pokoj" data-en="Living room" data-de="Wohnzimmer">Obývací pokoj</small></div></div>
+            <div class="gallery-item"><div class="gallery-item-placeholder">📷<br><small data-cs="Kuchyně" data-en="Kitchen" data-de="Küche">Kuchyně</small></div></div>
+            <div class="gallery-item"><div class="gallery-item-placeholder">📷<br><small data-cs="Ložnice" data-en="Bedroom" data-de="Schlafzimmer">Ložnice</small></div></div>
+            <div class="gallery-item"><div class="gallery-item-placeholder">📷<br><small data-cs="Chalupa zepředu" data-en="Cottage front view" data-de="Ferienhaus Vorderansicht">Chalupa zepředu</small></div></div>
+            <div class="gallery-item"><div class="gallery-item-placeholder">📷<br><small data-cs="Zahrada" data-en="Garden" data-de="Garten">Zahrada</small></div></div>
+            <div class="gallery-item"><div class="gallery-item-placeholder">📷<br><small data-cs="Okolí" data-en="Surroundings" data-de="Umgebung">Okolí</small></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- Seasons -->
+<section class="seasons" id="sezony">
+    <div class="section-inner">
+        <h2 class="section-title" data-cs="Krásné v každém ročním období" data-en="Beautiful in every season" data-de="Schön zu jeder Jahreszeit">Krásné v každém ročním období</h2>
+        <p class="section-subtitle" data-cs="Žďárské vrchy mají co nabídnout po celý rok – od lezení po běžky" data-en="The Žďárské vrchy have something to offer year-round – from climbing to cross-country skiing" data-de="Das Žďárské-vrchy-Gebirge bietet das ganze Jahr über etwas – vom Klettern bis zum Langlauf">Žďárské vrchy mají co nabídnout po celý rok – od lezení po běžky</p>
+        <div class="seasons-grid">
+            <div class="season-card">
+                <div class="season-icon">🌸</div>
+                <h4 data-cs="Jaro" data-en="Spring" data-de="Frühling">Jaro</h4>
+                <p data-cs="Probouzející se příroda, suché skály ideální pro lezení. První cyklovýjezdy a procházky rozkvetlými loukami podél řeky Svratky." data-en="Nature awakening, dry rocks ideal for climbing. First cycling trips and walks through blooming meadows along the Svratka river." data-de="Erwachende Natur, trockene Felsen ideal zum Klettern. Erste Radtouren und Spaziergänge durch blühende Wiesen entlang des Flusses Svratka.">Probouzející se příroda, suché skály ideální pro lezení. První cyklovýjezdy a procházky rozkvetlými loukami podél řeky Svratky.</p>
+            </div>
+            <div class="season-card">
+                <div class="season-icon">☀️</div>
+                <h4 data-cs="Léto" data-en="Summer" data-de="Sommer">Léto</h4>
+                <p data-cs="Koupání ve Velkém Dářku, grilování na zahradě, lezení na Malinské skále. Dlouhé večery pod hvězdnou oblohou bez světelného smogu." data-en="Swimming in Velké Dářko, barbecues in the garden, climbing at Malinská skála. Long evenings under starry skies free of light pollution." data-de="Baden im Velké Dářko, Grillen im Garten, Klettern an der Malinská skála. Lange Abende unter dem Sternenhimmel ohne Lichtverschmutzung.">Koupání ve Velkém Dářku, grilování na zahradě, lezení na Malinské skále. Dlouhé večery pod hvězdnou oblohou bez světelného smogu.</p>
+            </div>
+            <div class="season-card">
+                <div class="season-icon">🍂</div>
+                <h4 data-cs="Podzim" data-en="Autumn" data-de="Herbst">Podzim</h4>
+                <p data-cs="Barevné lesy v plné kráse, houbaření, bouldering na Čtyřech palicích. Mlhavá romantika údolí a horký čaj po návratu na chalupu." data-en="Colorful forests in full beauty, mushroom picking, bouldering at Čtyři palice. Misty valley romance and hot tea after returning to the cottage." data-de="Farbenfrohe Wälder in voller Pracht, Pilze sammeln, Bouldern an Čtyři palice. Neblige Talromantik und heißer Tee nach der Rückkehr ins Ferienhaus.">Barevné lesy v plné kráse, houbaření, bouldering na Čtyřech palicích. Mlhavá romantika údolí a horký čaj po návratu na chalupu.</p>
+            </div>
+            <div class="season-card">
+                <div class="season-icon">❄️</div>
+                <h4 data-cs="Zima" data-en="Winter" data-de="Winter">Zima</h4>
+                <p data-cs="Běžecké lyžování přímo za chalupou, zasněžená krajina jako z pohádky. Žďárské vrchy jsou rájem běžkařů – upravené stopy v celé oblasti." data-en="Cross-country skiing right behind the cottage, a snow-covered landscape like a fairy tale. The Žďárské vrchy are a cross-country skier's paradise – groomed trails throughout the area." data-de="Langlauf direkt hinter dem Ferienhaus, eine verschneite Landschaft wie aus einem Märchen. Das Žďárské-vrchy-Gebirge ist ein Langlauf-Paradies – gespurte Loipen im gesamten Gebiet.">Běžecké lyžování přímo za chalupou, zasněžená krajina jako z pohádky. Žďárské vrchy jsou rájem běžkařů – upravené stopy v celé oblasti.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="kontakt">
+    <div class="section-inner">
+        <h2 class="section-title" data-cs="Máte zájem? Ozvěte se!" data-en="Interested? Get in touch!" data-de="Interesse? Kontaktieren Sie uns!">Máte zájem? Ozvěte se!</h2>
+        <p class="section-subtitle" data-cs="Ubytování je na poptávku. Rádi vám odpovíme na všechny dotazy ohledně termínů, kapacity a ceny." data-en="Accommodation is available on request. We'll be happy to answer all your questions about dates, capacity, and pricing." data-de="Unterkunft auf Anfrage. Wir beantworten gerne alle Ihre Fragen zu Terminen, Kapazität und Preisen.">Ubytování je na poptávku. Rádi vám odpovíme na všechny dotazy ohledně termínů, kapacity a ceny.</p>
+
+        <div class="contact-info">
+            <div class="contact-item">
+                <div class="icon">📞</div>
+                <h4 data-cs="Telefon" data-en="Phone" data-de="Telefon">Telefon</h4>
+                <p><a href="tel:+420XXXXXXXXX">+420 XXX XXX XXX</a></p>
+            </div>
+            <div class="contact-item">
+                <div class="icon">✉️</div>
+                <h4>E-mail</h4>
+                <p><a href="mailto:email@example.com">email@example.com</a></p>
+            </div>
+            <div class="contact-item">
+                <div class="icon">📍</div>
+                <h4 data-cs="Adresa" data-en="Address" data-de="Adresse">Adresa</h4>
+                <p>Čikánecká 2<br>592 02 Svratka<br><span data-cs="Česká republika" data-en="Czech Republic" data-de="Tschechische Republik">Česká republika</span></p>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <iframe
+                src="https://www.openstreetmap.org/export/embed.html?bbox=16.015%2C49.705%2C16.045%2C49.725&layer=mapnik&marker=49.715%2C16.03"
+                allowfullscreen loading="lazy" title="Map – Chalupa Svratka"></iframe>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2025 Chalupa Svratka | Čikánecká 2, 592 02 Svratka | Foto: AOPK ČR, Vysočina Tourism, Wikimedia Commons</p>
+</footer>
+
+<script>
+// Language switcher
+function setLang(lang) {
+    document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+        const text = el.getAttribute('data-' + lang);
+        if (text) {
+            if (el.tagName === 'A' && el.classList.contains('cta-btn')) {
+                el.textContent = text;
+            } else if (el.children.length === 0 || el.tagName === 'P' || el.tagName === 'H1' || el.tagName === 'H2' || el.tagName === 'H3' || el.tagName === 'H4' || el.tagName === 'SPAN' || el.tagName === 'SMALL' || el.tagName === 'DIV') {
+                // Only update if no child elements with data attrs, or it's a text container
+                if (el.querySelector('[data-cs]') === null) {
+                    el.textContent = text;
+                }
+            } else if (el.tagName === 'A') {
+                el.textContent = text;
+            }
+        }
+    });
+    // Update active button
+    document.querySelectorAll('.lang-switch button').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase().includes(lang === 'cs' ? 'cz' : lang));
+    });
+    // Update html lang
+    document.documentElement.lang = lang === 'cs' ? 'cs' : lang === 'de' ? 'de' : 'en';
+}
+
+// Mobile menu
+function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+}
+// Close menu on link click
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('open');
+    });
+});
+</script>
+
+</body>
+</html>
