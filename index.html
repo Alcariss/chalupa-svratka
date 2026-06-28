@@ -256,7 +256,7 @@
             transform: translateY(-4px);
             box-shadow: 0 12px 40px rgba(0,0,0,0.1);
         }
-        .attraction-card img { width: 100%; height: 200px; object-fit: cover; }
+        .attraction-card img { width: 100%; height: 240px; object-fit: cover; object-position: center; }
         .attraction-card .card-body { padding: 1.25rem; }
         .attraction-card h4 {
             font-family: var(--font-heading);
@@ -283,12 +283,17 @@
         .gallery-item {
             border-radius: 10px;
             overflow: hidden;
-            aspect-ratio: 4/3;
+            aspect-ratio: 16/10;
             background: var(--color-light);
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px dashed #ccc;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
         }
         .gallery-item-placeholder {
             color: var(--color-text-light);
